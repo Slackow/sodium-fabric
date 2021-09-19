@@ -55,8 +55,8 @@ public class VanillaOptions {
             .setKey("options.entityCulling")
             .setText("Entity Culling")
             .setOptions(EntityCulling.values())
-            .setGetter((options) -> EntityCulling.getOption(options.advanced.useEntityCulling))
-            .setSetter((options, value) -> options.advanced.useEntityCulling = value.isEnabled())
+            .setGetter((options) -> EntityCulling.getOption(options.advanced.useAdvancedEntityCulling))
+            .setSetter((options, value) -> options.advanced.useAdvancedEntityCulling = value.isEnabled())
             .setTextGetter(EntityCulling::getText)
             .build();
 }

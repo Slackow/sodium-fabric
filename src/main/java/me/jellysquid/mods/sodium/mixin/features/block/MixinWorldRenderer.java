@@ -33,6 +33,6 @@ public class MixinWorldRenderer {
         if(SodiumWorldRenderer.getInstance().getUseEntityCulling()){
             return -1;
         }
-        return  instance.regularEntityCount;
+        return instance.regularEntityCount;
     }
 }
