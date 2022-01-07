@@ -17,10 +17,14 @@ import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.stream.Stream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class SodiumGameOptions {
     public final QualitySettings quality = new QualitySettings();
     public final AdvancedSettings advanced = new AdvancedSettings();
+    public final SettingsSettings settings = new SettingsSettings();
     public final UnofficialSettings unofficial = new UnofficialSettings();
 
     private File file;
@@ -98,6 +102,10 @@ public class SodiumGameOptions {
         private interface SupportCheck {
             boolean isSupported(boolean disableBlacklist);
         }
+    }
+
+    public static class SettingsSettings {
+        public boolean forceVanillaSettings = false;
     }
 
     public enum GraphicsQuality implements TextProvider {
