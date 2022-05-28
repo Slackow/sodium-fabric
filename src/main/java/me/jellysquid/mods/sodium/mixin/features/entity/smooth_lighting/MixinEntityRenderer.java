@@ -35,6 +35,7 @@ public abstract class MixinEntityRenderer<T extends Entity> implements EntityLig
     private void preShouldRender(T entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
         // If the entity isn't culled already by other means, try to perform a second pass
         if (cir.getReturnValue() && !SodiumWorldRenderer.getInstance().isEntityVisible(entity)) {
+//            MinecraftClient.getInstance().worldRenderer.regularEntityCount++;
             cir.setReturnValue(false);
         }
     }
