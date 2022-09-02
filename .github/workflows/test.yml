@@ -5,10 +5,14 @@ on:
     branches:
       - "main"
       - "master"
-  workflow_dispatch:
+    paths:
+      - src/**
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
 
 jobs:
-  test:
+  build:
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout sources
