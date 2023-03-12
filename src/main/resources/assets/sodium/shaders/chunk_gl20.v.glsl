@@ -14,10 +14,14 @@ varying float v_FragDistance;
 
 uniform mat4 u_ModelViewProjectionMatrix;
 uniform vec3 u_ModelScale;
-uniform vec2 u_TextureScale;
 
 // The model translation for this draw call.
+// If multi-draw is enabled, then the model offset will come from an attribute buffer.
+#ifdef USE_MULTIDRAW
 attribute vec4 d_ModelOffset;
+#else
+uniform vec4 d_ModelOffset;
+#endif
 
 void main() {
     // Translates the vertex position around the position of the camera
@@ -34,7 +38,7 @@ void main() {
 
     // Pass the color and texture coordinates to the fragment shader
     v_Color = a_Color;
-    v_TexCoord = a_TexCoord * u_TextureScale;
+    v_TexCoord = a_TexCoord;
     v_LightCoord = a_LightCoord;
 }
 

@@ -267,7 +267,7 @@ public class MixinMatrix4f implements Matrix4fExtended {
             throw new BufferUnderflowException();
         }
 
-        if (buf.isDirect() && UnsafeUtil.isAvailable()) {
+        if (UnsafeUtil.isAvailable()) {
             this.writeToBufferUnsafe(buf);
         } else {
             this.writeToBufferSafe(buf);

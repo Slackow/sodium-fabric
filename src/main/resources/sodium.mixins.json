@@ -6,12 +6,8 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "overwrites": {
-    "conformVisibility": true
-  },
   "client": [
     "core.frustum.MixinFrustum",
-    "core.matrix.MixinGameRenderer",
     "core.matrix.MixinMatrix3f",
     "core.matrix.MixinMatrix4f",
     "core.model.MixinBlockColors",
@@ -19,8 +15,8 @@
     "core.pipeline.MixinBakedQuad",
     "core.pipeline.MixinBufferBuilder",
     "core.pipeline.MixinVertexConsumer",
-    "core.pipeline.MixinVertexFormat",
     "features.block.MixinBlockModelRenderer",
+    "features.block.MixinBufferBuilder",
     "features.block.MixinWorldRenderer",
     "features.buffer_builder.fast_advance.MixinBufferBuilder",
     "features.buffer_builder.fast_sort.MixinBufferBuilder",
@@ -28,20 +24,13 @@
     "features.buffer_builder.intrinsics.MixinSpriteTexturedVertexConsumer",
     "features.buffer_builder.intrinsics.MixinWorldRenderer",
     "features.chunk_rendering.MixinChunkBuilder",
-    "features.chunk_rendering.MixinClientChunkManager",
-    "features.chunk_rendering.MixinClientChunkManager$MixinClientChunkMap",
     "features.chunk_rendering.MixinClientWorld",
-    "features.chunk_rendering.MixinPackedIntegerArray",
-    "features.chunk_rendering.MixinPalettedContainer",
     "features.chunk_rendering.MixinWorldRenderer",
     "features.debug.MixinDebugHud",
     "features.entity.fast_render.MixinCuboid",
     "features.entity.fast_render.MixinModelPart",
     "features.entity.smooth_lighting.MixinEntityRenderer",
-    "features.entity.smooth_lighting.MixinPaintingEntityRenderer",
-    "features.entity.smooth_lighting.MixinWorldRenderer",
     "features.gui.MixinDebugHud",
-    "features.gui.fast_loading_screen.MixinLevelLoadingScreen",
     "features.gui.font.MixinGlyphRenderer",
     "features.item.MixinItemRenderer",
     "features.matrix_stack.MixinMatrixStack",
@@ -57,13 +46,7 @@
     "features.particle.fast_render.MixinBillboardParticle",
     "features.render_layer.MixinRenderLayers",
     "features.texture_tracking.MixinSprite",
-    "features.texture_tracking.MixinSpriteAtlasTexture",
+    "features.texture_tracking.MixinSpriteIdentifier",
     "features.world_ticking.MixinClientWorld"
-  ],
-  "mixins": [
-    "features.debug.DebugHudAccessor",
-    "features.options.MinecraftServerMixin",
-    "features.options.MixinDoubleOption",
-    "features.options.MixinVideoOptionsScreen"
   ]
 }

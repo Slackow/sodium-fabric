@@ -1,18 +1,15 @@
 package me.jellysquid.mods.sodium.mixin.features.block;
 
-import me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer;
-import me.jellysquid.mods.sodium.client.render.pipeline.context.ChunkRenderCacheShared;
+import me.jellysquid.mods.sodium.client.render.pipeline.context.GlobalRenderContext;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
@@ -25,14 +22,6 @@ public class MixinWorldRenderer {
     private void reset(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera,
                        GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f,
                        CallbackInfo ci) {
-        ChunkRenderCacheShared.resetCaches();
-    }
-
-    @Redirect(method = "getEntitiesDebugString", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/WorldRenderer;regularEntityCount:I"))
-    private int hidEntityCount(WorldRenderer instance){
-        if(SodiumWorldRenderer.getInstance().getUseEntityCulling()){
-            return -1;
-        }
-        return  instance.regularEntityCount;
+        GlobalRenderContext.resetCaches();
     }
 }

@@ -1,6 +1,5 @@
 package me.jellysquid.mods.sodium.client.gui;
 
-import me.jellysquid.mods.sodium.client.SodiumClientMod;
 import me.jellysquid.mods.sodium.client.gui.options.*;
 import me.jellysquid.mods.sodium.client.gui.options.control.Control;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlElement;
@@ -17,10 +16,8 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.StringRenderable;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Util;
 import org.lwjgl.glfw.GLFW;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -38,8 +35,6 @@ public class SodiumOptionsGUI extends Screen {
     private OptionPage currentPage;
 
     private FlatButtonWidget applyButton, closeButton, undoButton;
-    private FlatButtonWidget donateButton, hideDonateButton;
-
     private boolean hasPendingChanges;
     private ControlElement<?> hoveredElement;
 
@@ -51,7 +46,7 @@ public class SodiumOptionsGUI extends Screen {
         this.pages.add(SodiumGameOptionPages.general());
         this.pages.add(SodiumGameOptionPages.quality());
         this.pages.add(SodiumGameOptionPages.advanced());
-        this.pages.add(SodiumGameOptionPages.speedrun());
+        this.pages.add(SodiumGameOptionPages.unofficial());
     }
 
     public void setPage(OptionPage page) {
@@ -84,21 +79,13 @@ public class SodiumOptionsGUI extends Screen {
         this.rebuildGUIPages();
         this.rebuildGUIOptions();
 
-        this.undoButton = new FlatButtonWidget(new Dim2i(this.width - 211, this.height - 26, 65, 20), "Undo", this::undoChanges);
-        this.applyButton = new FlatButtonWidget(new Dim2i(this.width - 142, this.height - 26, 65, 20), "Apply", this::applyChanges);
-        this.closeButton = new FlatButtonWidget(new Dim2i(this.width - 73, this.height - 26, 65, 20), "Close", this::onClose);
-        this.donateButton = new FlatButtonWidget(new Dim2i(this.width - 128, 6, 100, 20), "Buy us a coffee!", this::openDonationPage);
-        this.hideDonateButton = new FlatButtonWidget(new Dim2i(this.width - 26, 6, 20, 20), "x", this::hideDonationButton);
-
-        if (SodiumClientMod.options().notifications.hideDonationButton) {
-            this.setDonationButtonVisibility(false);
-        }
+        this.undoButton = new FlatButtonWidget(new Dim2i(this.width - 211, this.height - 30, 65, 20), "Undo", this::undoChanges);
+        this.applyButton = new FlatButtonWidget(new Dim2i(this.width - 142, this.height - 30, 65, 20), "Apply", this::applyChanges);
+        this.closeButton = new FlatButtonWidget(new Dim2i(this.width - 73, this.height - 30, 65, 20), "Close", this::onClose);
 
         this.children.add(this.undoButton);
         this.children.add(this.applyButton);
         this.children.add(this.closeButton);
-        this.children.add(this.donateButton);
-        this.children.add(this.hideDonateButton);
 
         for (Element element : this.children) {
             if (element instanceof Drawable) {
@@ -107,32 +94,14 @@ public class SodiumOptionsGUI extends Screen {
         }
     }
 
-    private void setDonationButtonVisibility(boolean value) {
-        this.donateButton.setVisible(value);
-        this.hideDonateButton.setVisible(value);
-    }
-
-    private void hideDonationButton() {
-        SodiumGameOptions options = SodiumClientMod.options();
-        options.notifications.hideDonationButton = true;
-
-        try {
-            options.writeChanges();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save configuration", e);
-        }
-
-        this.setDonationButtonVisibility(false);
-    }
-
     private void rebuildGUIPages() {
-        int x = 6;
+        int x = 10;
         int y = 6;
 
         for (OptionPage page : this.pages) {
-            int width = 12 + this.textRenderer.getWidth(page.getName());
+            int width = 10 + this.textRenderer.getWidth(page.getName());
 
-            FlatButtonWidget button = new FlatButtonWidget(new Dim2i(x, y, width, 18), page.getName(), () -> this.setPage(page));
+            FlatButtonWidget button = new FlatButtonWidget(new Dim2i(x, y, width, 16), page.getName(), () -> this.setPage(page));
             button.setSelected(this.currentPage == page);
 
             x += width + 6;
@@ -142,7 +111,7 @@ public class SodiumOptionsGUI extends Screen {
     }
 
     private void rebuildGUIOptions() {
-        int x = 6;
+        int x = 10;
         int y = 28;
 
         for (OptionGroup group : this.currentPage.getGroups()) {
@@ -284,15 +253,11 @@ public class SodiumOptionsGUI extends Screen {
                 .forEach(Option::reset);
     }
 
-    private void openDonationPage() {
-        Util.getOperatingSystem()
-                .open("https://caffeinemc.net/donate");
-    }
-
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_P && (modifiers & GLFW.GLFW_MOD_SHIFT) != 0) {
             MinecraftClient.getInstance().openScreen(new VideoOptionsScreen(this.prevScreen, MinecraftClient.getInstance().options));
+
             return true;
         }
 

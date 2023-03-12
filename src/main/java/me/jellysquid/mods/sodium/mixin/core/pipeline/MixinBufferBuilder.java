@@ -1,11 +1,10 @@
 package me.jellysquid.mods.sodium.mixin.core.pipeline;
 
-import me.jellysquid.mods.sodium.client.gl.attribute.BufferVertexFormat;
 import me.jellysquid.mods.sodium.client.model.vertex.VertexDrain;
 import me.jellysquid.mods.sodium.client.model.vertex.VertexSink;
+import me.jellysquid.mods.sodium.client.model.vertex.VertexType;
+import me.jellysquid.mods.sodium.client.model.vertex.VertexTypeBlittable;
 import me.jellysquid.mods.sodium.client.model.vertex.buffer.VertexBufferView;
-import me.jellysquid.mods.sodium.client.model.vertex.type.BlittableVertexType;
-import me.jellysquid.mods.sodium.client.model.vertex.type.VertexType;
 import me.jellysquid.mods.sodium.client.util.UnsafeUtil;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexConsumer;
@@ -43,9 +42,6 @@ public abstract class MixinBufferBuilder implements VertexBufferView, VertexDrai
 
     @Override
     public boolean ensureBufferCapacity(int bytes) {
-        // Ensure that there is always space for 1 more vertex; see BufferBuilder.next()
-        bytes += format.getVertexSize();
-
         if (this.elementOffset + bytes <= this.buffer.capacity()) {
             return false;
         }
@@ -76,25 +72,25 @@ public abstract class MixinBufferBuilder implements VertexBufferView, VertexDrai
     }
 
     @Override
-    public BufferVertexFormat getVertexFormat() {
-        return BufferVertexFormat.from(this.format);
+    public VertexFormat getVertexFormat() {
+        return this.format;
     }
 
     @Override
-    public void flush(int vertexCount, BufferVertexFormat format) {
-        if (BufferVertexFormat.from(this.format) != format) {
+    public void flush(int vertexCount, VertexFormat format) {
+        if (this.format != format) {
             throw new IllegalStateException("Mis-matched vertex format (expected: [" + format + "], currently using: [" + this.format + "])");
         }
 
         this.vertexCount += vertexCount;
-        this.elementOffset += vertexCount * format.getStride();
+        this.elementOffset += vertexCount * format.getVertexSize();
     }
 
     @Override
     public <T extends VertexSink> T createSink(VertexType<T> factory) {
-        BlittableVertexType<T> blittable = factory.asBlittable();
+        VertexTypeBlittable<T> blittable = factory.asBlittable();
 
-        if (blittable != null && blittable.getBufferVertexFormat() == this.getVertexFormat())  {
+        if (blittable != null && blittable.getBufferVertexFormat() == this.format)  {
             return blittable.createBufferWriter(this, UnsafeUtil.isAvailable());
         }
 
