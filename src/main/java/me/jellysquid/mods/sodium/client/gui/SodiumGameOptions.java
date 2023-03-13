@@ -53,7 +53,7 @@ public class SodiumGameOptions {
     }
 
     public static class UnofficialSettings {
-        public boolean usePlanarFog = false;
+        public boolean usePlanarFog = true;
     }
 
     public enum ChunkRendererBackendOption implements TextProvider {

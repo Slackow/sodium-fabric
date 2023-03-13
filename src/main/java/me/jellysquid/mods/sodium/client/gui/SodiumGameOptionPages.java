@@ -361,6 +361,6 @@ public class SodiumGameOptionPages {
                         .build()
                 )
                 .build());
-        return new OptionPage("Unofficial", ImmutableList.copyOf(groups));
+        return new OptionPage("Speedrun", ImmutableList.copyOf(groups));
     }
 }
