@@ -8,9 +8,9 @@
     "jan-leila"
   ],
   "contact": {
-    "homepage": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-1.16.1",
-    "issues": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-1.16.1/issues",
-    "sources": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-1.16.1"
+    "homepage": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-mac-1.16.1",
+    "issues": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-mac-1.16.1/issues",
+    "sources": "https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-sodium-mac-1.16.1"
   },
   "license": "LGPL-3.0-only",
   "icon": "assets/sodium/icon.png",
