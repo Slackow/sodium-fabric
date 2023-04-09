@@ -15,7 +15,7 @@ on:
 env:
   RELEASE_TITLE: "Sodium Mac 1.16.1 - build ${{github.run_number}}"
   RELEASE_TAG: "v${{github.run_number}}"
-  RELEASE_FILE: "build/libs/*-v${{github.run_number}}.jar"
+  RELEASE_FILE: "build/libs/*1.jar"
 
 jobs:
   publish:
